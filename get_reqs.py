@@ -1,5 +1,6 @@
 from os import listdir
 from os import walk
+from os.path import join
 
 # TODO
 # - handle all import formats
@@ -13,7 +14,7 @@ from os import walk
 def dir_iter(location):
     files = []
     for (dirpath, dirnames, filenames) in walk(location):
-        files.extend(filenames)
+        files.extend(map(lambda x: join(dirpath,x), filter(lambda x: not x.startswith('.'), filenames)))
     return files
 
 def get_reqs(location):
@@ -31,11 +32,14 @@ def get_reqs(location):
         return reqs
 
 def get_reqs_file(f):
-    reqs = []
-    module = f.readlines()
+    reqs = set()
+    module = f.read().split('\n')
     for line in module:
-        if 'import' in line:
-            reqs.append(line.replace('import ','').replace('\n',''))
+        if 'import' == line.strip()[:6]:
+            req = line.replace('import ','')
+        elif 'from' == line.strip()[:4]:
+            req = line[5:line.find('import')-1]
+        reqs.add(req)
     return reqs
 
 if __name__=="__main__":

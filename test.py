@@ -1,2 +1,2 @@
 import ystockquote
-import pandas
+from pandas import pandas
