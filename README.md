@@ -4,5 +4,4 @@ get required python modules and create a requirements.txt file
  - get versions if installed
  - write to requirements.txt
  - ignore more builtin modules
-
-
+ - filter out invalid module names
