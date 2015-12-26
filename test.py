@@ -1,2 +1,2 @@
 import ystockquote
-from pandas import pandas
+from pandas import blah
